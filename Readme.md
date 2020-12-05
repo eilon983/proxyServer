@@ -2,6 +2,7 @@
 ############################################
 ###      introduction to the service      ##
 ############################################
+
 I decided to implement the storage(cache) of the ips in redis and not in the server local storage for few reasons:
 availability: we can deploy the service across geographically locations(for late latencies) or/and use load balancing techniques to route requests
 to few deployed same services that uses 1 central entity(redis)
@@ -15,6 +16,7 @@ Handle ErrorReport:
 ############################################
 ###       run it with docker-compose      ##
 ############################################
+
 1. edit the settings.env file in case you want to see full logs
 2. docker-compose up --build
 3. go to http://0.0.0.0:5000/health to check if service is up
@@ -36,7 +38,8 @@ Handle ErrorReport:
     virtualenv -p python3.7 venv
     source venv/bin/activate
     pip install -r requirements.txt
-5. run the sw_proxy.py
+5. add env variable REDIS_HOSTNAME=localhost
+6. run the sw_proxy.py
 
 
 
