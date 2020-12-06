@@ -1,4 +1,3 @@
-import abc
 import time
 from src.Redis.redisEntity import RedisEntity
 
@@ -17,9 +16,9 @@ class ErrorsCache(RedisEntity):
 
     def suspend_for_k_hours(self, country_code, ip):
         """
-        this function get the op+cc from the report error endpoint,
-        and removes the ip from list, saves it in local cache - "in_memory"
-        after k hours it will be returned to the country list
+        this function get the ip+cc from the report error endpoint,
+        and removes the ip from country list, saves it in local cache - "in_memory"
+        after k hours it will be returned to the country list and removed from "in_memory" list
         :param country_code:
         :param ip:
         :return:

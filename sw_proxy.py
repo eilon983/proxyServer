@@ -60,24 +60,27 @@ def get_proxy(country_code):
 
 @app.route('/ReportError', methods=['POST'])
 def report_error():
-
     if flask.request.method == 'POST':
         # Extract the input
-        request = flask.request.get_json()
+            try:
+                request = flask.request.get_json()
 
-        app.logger.info(f""" ReportError request made for {request['ip']} in list {request['country_code']}""")
-        res = errorsCache.suspend_for_k_hours(request['country_code'],
-                                              request['ip'])
-        if res > 0:
-            app.logger.info(f"""{request['ip']} in list {request['country_code']}
-                            successfully reported and suspended """)
-            status = 'suspended'
+                app.logger.info(f""" ReportError request made for {request['ip']} in list {request['country_code']}""")
+                res = errorsCache.suspend_for_k_hours(request['country_code'],
+                                                      request['ip'])
+                if res > 0:
+                    app.logger.info(f"""{request['ip']} in list {request['country_code']}
+                                    successfully reported and suspended """)
+                    status = 'suspended'
 
-        else:
-            app.logger.error(f"""{request['ip']} in list {request['country_code']} didnt suspended """)
-            status = 'not found'
+                else:
+                    app.logger.error(f"""{request['ip']} in list {request['country_code']} didnt suspended """)
+                    status = 'not found'
 
-        return jsonify({"ip": request['ip'], "status": status})
+                return jsonify({"ip": request['ip'], "status": status})
+            except Exception as e:
+                app.logger.error(f"Exception in ReportError {e}")
+                flask.abort(400)
 
 
 #

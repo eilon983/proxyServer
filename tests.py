@@ -5,8 +5,11 @@ import json
 from collections import Counter
 
 
-class RdsTest(unittest.TestCase):
+class ProxyServerTests(unittest.TestCase):
+
+    # if you run it via pycharm set env variable SERVER: 127.0.0.1
     server = os.environ.get('SERVER', "0.0.0.0")
+
     def setUp(self):
         pass
 
@@ -23,7 +26,7 @@ class RdsTest(unittest.TestCase):
 
     def test_report_error(self):
         ips = []
-        for x in range(900):
+        for x in range(10000):
             ip = requests.get(f'http://{self.server}:5000/GetProxy/us')
             ip = json.loads(ip.content)['ip']
             ips.append(ip)
