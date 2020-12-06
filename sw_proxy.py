@@ -2,11 +2,12 @@ import os
 import flask
 import atexit
 import logging
+from flask import jsonify
 from insert_ips import InsertIps
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from src.Redis.redisEntity import RedisEntity
-from src.errorsCache.eCacheEntity import ErrorsCache
+from src.Redis.errorCacheEntity import ErrorsCache
 
 ###########################################
 # load configurations from env.variables  #
@@ -21,7 +22,9 @@ app.logger.setLevel(logging_levels.get(os.environ.get("LOGGING_LEVEL", 'error'))
 
 # lazy loading redis
 print(f"Redis run on: {redis_hostname} \n")
+# cache is the DAO where the countries lists resides
 cache = RedisEntity()
+# errorsCache the error local cache, where the items represents ReportedError ips
 errorsCache = ErrorsCache(k=6, logger=app.logger)
 
 # schedule a job to refresh the error cache every 1 minute
@@ -37,7 +40,7 @@ def home():
 
 @app.route('/health')
 def health():
-    return '{"status":"UP"}'
+    return jsonify({"status": "UP"})
 
 
 @app.route('/GetProxy/<string:country_code>')
@@ -47,7 +50,9 @@ def get_proxy(country_code):
         ip = cache.get_from_cache(country_code)
         if ip is None:
             ip = "No ips for this list"
-        return f"""{{'ip':'{ip}'}}"""
+        else:
+            ip = ip.decode("utf-8")
+        return jsonify({"ip": ip})
     except Exception as e:
         app.logger.error(f"Exception in GetProxy {e}")
         flask.abort(400)
@@ -67,15 +72,12 @@ def report_error():
             app.logger.info(f"""{request['ip']} in list {request['country_code']}
                             successfully reported and suspended """)
             status = 'suspended'
-            return f"""{{'ip':'{request['ip']}',
-                        'status':'{status}'}}"""
 
         else:
             app.logger.error(f"""{request['ip']} in list {request['country_code']} didnt suspended """)
             status = 'not found'
 
-        return f"""{{'ip':'{request['ip']}',
-                'status':'{status}'}}"""
+        return jsonify({"ip": request['ip'], "status": status})
 
 
 #

@@ -37,3 +37,4 @@ class RedisEntity(object):
 
     def insert_to_top(self, lst_name, *values):
         self.connection.rpush(lst_name, *values)
+
