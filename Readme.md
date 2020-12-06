@@ -20,8 +20,8 @@ Handle ErrorReport:
 1. edit the settings.env file in case you want to see full logs
 2. *docker-compose up --build*
 3. go to http://0.0.0.0:5000/health to check if service is up
-4. http://0.0.0.0:5000/GetProxy/<country_code> to get ip for <country_code> i.e http://0.0.0.0:5000/GetProxy/us
-5. POST request to http://0.0.0.0:5000/ReportError with json i.e {"ip":"209.146.129.32",
+4. http://0.0.0.0:5000/GetProxy/<country_code> to get ip for <country_code> e.g http://0.0.0.0:5000/GetProxy/us
+5. POST request to http://0.0.0.0:5000/ReportError with json e.g {"ip":"209.146.129.32",
                                                                   "country_code":"us"}
    don't forget to add header Content-Type:application/json
 
