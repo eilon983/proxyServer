@@ -11,7 +11,7 @@ class ErrorsCache(RedisEntity):
         super().__init__()
         self.in_memory = []
         self.k = k
-        self.relative_time = k * 60 * 60  # k hours in miliseconds
+        self.relative_time = k * 60 * 60  # k hours in seconds
         self.logger = logger
 
     def suspend_for_k_hours(self, country_code, ip):
