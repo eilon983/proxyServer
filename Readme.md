@@ -12,6 +12,10 @@ Handle ErrorReport:
      the reported ip will be removed from it's list by redis-remove function, and will be saved in local storage for 6 hours(epoch time). 
      I built a function that has scheduler will run in interval time(1 minute), 
      and will insert back the ips that were suspended for 6 hours
+     
+
+
+**** the tests file is only for local/docker checks
 
 ############################################
 ###       run it with docker-compose      ##
