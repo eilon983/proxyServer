@@ -74,7 +74,7 @@ def report_error():
                     status = 'suspended'
 
                 else:
-                    app.logger.error(f"""{request['ip']} in list {request['country_code']} didnt suspended """)
+                    app.logger.error(f"""{request['ip']} in list {request['country_code']} not found in active lists""")
                     status = 'not found'
 
                 return jsonify({"ip": request['ip'], "status": status})
