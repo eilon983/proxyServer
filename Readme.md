@@ -44,6 +44,9 @@ Handle ErrorReport:
     pip install -r requirements.txt
 5. add env variable REDIS_HOSTNAME=localhost
 6. run the sw_proxy.py
+7. go to http://127.0.0.1:5000/health to check if service is up
+8. http://127.0.0.1:5000/GetProxy/<country_code> to get ip for <country_code> e.g http://127.0.0.1:5000/GetProxy/us
+9. POST request to http://127.0.0.1:5000/ReportError with json e.g {"ip":"209.146.129.32", "country_code":"us"} don't forget to add header
 
 
 
