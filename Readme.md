@@ -9,9 +9,9 @@ to few instances, hence we can ensure that the cyclic order kept, it is not happ
 
 I use redis list for each country code: and for each request I do "left pop" and "right push" to ensure round robin uses of the ips.
 Handle ErrorReport:
-    * the reported ip will be removed from it's list by redis-remove function, and will be saved in local storage for 6 hours(epoch time)
-    * I built a function that has scheduler will run in interval time(1 minute),
-    * and will insert back the ips that were suspended for 6 hours
+     the reported ip will be removed from it's list by redis-remove function, and will be saved in local storage for 6 hours(epoch time). 
+     I built a function that has scheduler will run in interval time(1 minute), 
+     and will insert back the ips that were suspended for 6 hours
 
 ############################################
 ###       run it with docker-compose      ##
