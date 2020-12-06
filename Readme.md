@@ -9,9 +9,9 @@ to few instances, hence we can ensure that the cyclic order kept, it is not happ
 
 I use redis list for each country code: and for each request I do "left pop" and "right push" to ensure round robin uses of the ips.
 Handle ErrorReport:
-    * the reported ip will be removed from it's list by redis-remove function, and will be saved in local storage for 6 hours(epoch time)
-    * I built a function that has scheduler will run in interval time(1 minute),
-    * and will insert back the ips that were suspended for 6 hours
+     the reported ip will be removed from it's list by redis-remove function, and will be saved in local storage for 6 hours(epoch time). 
+     I built a function that has scheduler will run in interval time(1 minute), 
+     and will insert back the ips that were suspended for 6 hours
 
 ############################################
 ###       run it with docker-compose      ##
@@ -20,8 +20,8 @@ Handle ErrorReport:
 1. edit the settings.env file in case you want to see full logs
 2. *docker-compose up --build*
 3. go to http://0.0.0.0:5000/health to check if service is up
-4. http://0.0.0.0:5000/GetProxy/<country_code> to get ip for <country_code> i.e http://0.0.0.0:5000/GetProxy/us
-5. POST request to http://0.0.0.0:5000/ReportError with json i.e {"ip":"209.146.129.32",
+4. http://0.0.0.0:5000/GetProxy/<country_code> to get ip for <country_code> e.g http://0.0.0.0:5000/GetProxy/us
+5. POST request to http://0.0.0.0:5000/ReportError with json e.g {"ip":"209.146.129.32",
                                                                   "country_code":"us"}
    don't forget to add header Content-Type:application/json
 
